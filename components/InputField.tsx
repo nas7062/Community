@@ -39,7 +39,6 @@ const InputField = forwardRef<TextInput, InputFieldProps>(
   }
 );
 
-// forwardRef 쓸 때 displayName 붙여주는 게 좋음(디버깅용)
 InputField.displayName = "InputField";
 
 const styles = StyleSheet.create({
@@ -65,6 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     padding: 0,
     flex: 1,
+    color: colors.GRAY_700,
   },
   label: {
     fontSize: 12,

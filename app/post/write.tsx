@@ -12,8 +12,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
 const WriteSchema = z.object({
   title: z

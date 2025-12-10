@@ -11,7 +11,7 @@ import Toast from "react-native-toast-message";
 export default function MyInfoScreen() {
   const { profile, user } = useAuth();
   const posts = useGetPosts();
-  console.log(profile?.imageUri);
+
   // 유저가 아직 안 불러졌으면 0으로 처리
   const myPostsLen = user
     ? posts.filter((post) => post.userId === user.uid).length

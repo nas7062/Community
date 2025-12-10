@@ -75,25 +75,8 @@ function Feed({ post, isDetail = false }: FeedProps) {
     }
   };
 
-  const ContainerComponent = isDetail ? View : Pressable;
-
-  if (commentPending) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text>loading...</Text>
-      </View>
-    );
-  }
-
-  if (commentError || !comments) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text>댓글을 불러오지 못했습니다.</Text>
-      </View>
-    );
-  }
-  return (
-    <ContainerComponent style={styles.container} onPress={handlePressFeed}>
+  const FeedContent = () => (
+    <View>
       <View style={styles.contentContainer}>
         <Profile
           imageUri={post.author.imageUri}
@@ -122,10 +105,11 @@ function Feed({ post, isDetail = false }: FeedProps) {
         </Text>
         <View style={styles.subContainer}>
           <Text style={styles.sub}>조회 {post.viewCount}</Text>
-          <Text style={styles.comments}>댓글 {comments.length}</Text>
+          <Text style={styles.comments}>댓글 {post.commentCount}</Text>
           <Text style={styles.sub}>찜 {post.likes.length}</Text>
         </View>
       </View>
+
       <View style={styles.imageContainer}>
         <ImagePreviewList imageUrls={post.imageUris} />
         <Pressable style={styles.likeButton} onPress={onToggle}>
@@ -136,7 +120,33 @@ function Feed({ post, isDetail = false }: FeedProps) {
           />
         </Pressable>
       </View>
-    </ContainerComponent>
+    </View>
+  );
+
+  if (commentPending) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>loading...</Text>
+      </View>
+    );
+  }
+
+  if (commentError || !comments) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>댓글을 불러오지 못했습니다.</Text>
+      </View>
+    );
+  }
+
+  return isDetail ? (
+    <View style={styles.container}>
+      <FeedContent />
+    </View>
+  ) : (
+    <Pressable style={styles.container} onPress={handlePressFeed}>
+      <FeedContent />
+    </Pressable>
   );
 }
 

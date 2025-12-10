@@ -1,6 +1,4 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { router, Stack } from "expo-router";
-import { TouchableOpacity } from "react-native";
+import { Stack } from "expo-router";
 
 export default function ProfileLayout() {
   return (
@@ -20,7 +18,6 @@ export default function ProfileLayout() {
           headerShown: true,
         }}
       />
-      
     </Stack>
   );
 }

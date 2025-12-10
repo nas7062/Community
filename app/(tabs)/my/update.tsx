@@ -15,6 +15,7 @@ import { useAuth } from "@/context/AuthContext";
 import IntroduceInput from "@/components/IntroduceInput";
 import ImageInput from "@/components/ImageUrlInput";
 import useUploadImage from "@/api/image";
+import AuthRoute from "@/components/AuthRoute";
 const ProfileSchema = z.object({
   name: z
     .string()
@@ -79,7 +80,7 @@ export default function ProfileUpdateScreen() {
     }
   };
   return (
-    <>
+    <AuthRoute>
       <SafeAreaView style={styles.safeArea}>
         <KeyboardAwareScrollView>
           <View style={styles.container}>
@@ -99,7 +100,7 @@ export default function ProfileUpdateScreen() {
         </KeyboardAwareScrollView>
       </SafeAreaView>
       <CTAButton label="프로필 변경" onPress={handleSubmit(onHandleSignup)} />
-    </>
+    </AuthRoute>
   );
 }
 

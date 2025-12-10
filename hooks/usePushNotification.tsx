@@ -1,16 +1,18 @@
-import { Platform } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
+import { Platform } from "react-native";
 
 function usePushNotification() {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
-  const notificationListener = useRef<Notifications.EventSubscription>(null);
-  const responseListener = useRef<Notifications.EventSubscription>(null);
+
+  // 타입도 Subscription | null 로 맞춰주는 게 좋습니다.
+  const notificationListener = useRef<Notifications.Subscription | null>(null);
+  const responseListener = useRef<Notifications.Subscription | null>(null);
 
   const handleRegistrationError = (errorMessage: string) => {
     alert(errorMessage);
@@ -31,20 +33,24 @@ function usePushNotification() {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
+
       if (existingStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
+
       if (finalStatus !== "granted") {
         handleRegistrationError("푸시 권한을 허용해주세요.");
         return;
       }
+
       const projectId =
         Constants?.expoConfig?.extra?.eas?.projectId ??
         Constants?.easConfig?.projectId;
       if (!projectId) {
         handleRegistrationError("Project ID를 찾을 수 없습니다.");
       }
+
       try {
         const pushTokenString = (
           await Notifications.getExpoPushTokenAsync({
@@ -76,14 +82,11 @@ function usePushNotification() {
       });
 
     return () => {
-      notificationListener.current &&
-        Notifications.removeNotificationSubscription(
-          notificationListener.current
-        );
-      responseListener.current &&
-        Notifications.removeNotificationSubscription(responseListener.current);
+      // ⬇⬇ 여기만 이렇게 변경
+      notificationListener.current?.remove();
+      responseListener.current?.remove();
     };
-  }, []);
+  }, [registerForPushNotificationsAsync]);
 
   return { expoPushToken, notification };
 }

@@ -47,8 +47,9 @@ function LikeFeedList() {
       ref={topRef}
       data={posts}
       renderItem={({ item }) => <Feed post={item} />}
-      keyExtractor={(item) => String(item.id)}
+      keyExtractor={(item) => item.docId ?? `${String(item.id)}-like`}
       contentContainerStyle={styles.contentContainer}
+      removeClippedSubviews={false}
       onEndReached={loadMore}
       onEndReachedThreshold={0.1}
       refreshing={isRefreshing}

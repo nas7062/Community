@@ -8,7 +8,7 @@ import { useGetComment } from "@/hooks/useGetComment";
 import { useGetPostById } from "@/hooks/useGetPostById";
 import useKeyboard from "@/hooks/usekeyboard";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -79,8 +79,21 @@ export default function PostDetailScreen() {
     scrollRef.current.scrollToEnd({ animated: true });
   }, [comments]);
 
-  if (isPending || commentPending) return "loading...";
-  if (!post || isError || commentError) return;
+  if (isPending || commentPending) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>loading...</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (!post || isError || commentError) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>게시글을 불러오지 못했습니다.</Text>
+      </SafeAreaView>
+    );
+  }
   return (
     <SafeAreaView style={styles.container} key={id as string}>
       <KeyboardAvoidingView
@@ -99,10 +112,9 @@ export default function PostDetailScreen() {
             <Text style={styles.commnetCount}>댓글{comments.length || 0}</Text>
           </View>
           {comments?.map((comment) => (
-            <>
+            <React.Fragment key={comment.id}>
               <Comment
                 comment={comment}
-                key={comment.id}
                 postDocId={post.docId}
                 parentCommentId={parentCommentId}
                 onRepple={() => handleRepple(comment.id)}
@@ -116,7 +128,7 @@ export default function PostDetailScreen() {
                   isReply
                 />
               ))}
-            </>
+            </React.Fragment>
           ))}
         </ScrollView>
       </KeyboardAvoidingView>

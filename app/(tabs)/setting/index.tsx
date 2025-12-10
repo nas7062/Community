@@ -1,7 +1,7 @@
 import AuthRoute from "@/components/AuthRoute";
 import ListItem from "@/components/ListItem";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SettingScreen() {

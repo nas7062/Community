@@ -1,7 +1,7 @@
 import { ImageUri } from "@/types";
 import { router } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, StyleSheet } from "react-native";
+import { Image, Pressable, FlatList, StyleSheet } from "react-native";
 
 interface ImagePreviewListProps {
   imageUrls: ImageUri[];
@@ -9,34 +9,35 @@ interface ImagePreviewListProps {
 
 function ImagePreviewList({ imageUrls = [] }: ImagePreviewListProps) {
   return (
-    <ScrollView
-      nestedScrollEnabled={true}
+    <FlatList
       horizontal
-      showsHorizontalScrollIndicator
+      data={imageUrls}
+      showsHorizontalScrollIndicator={false}
+      keyExtractor={(item) => item.url}
       contentContainerStyle={styles.container}
-    >
-      {imageUrls.map(({ url }, index) => {
-        const encodedUrl = encodeURIComponent(url);
+      renderItem={({ item }) => {
+        const encodedUrl = encodeURIComponent(item.url);
         return (
           <Pressable
             style={styles.imgContainer}
-            key={url + index}
             onPress={() =>
-              router.push({ pathname: "/image", params: { url: encodedUrl } })
+              router.push({
+                pathname: "/image",
+                params: { url: encodedUrl },
+              })
             }
           >
-            <Image style={styles.image} source={{ uri: url }} />
+            <Image style={styles.image} source={{ uri: item.url }} />
           </Pressable>
         );
-      })}
-    </ScrollView>
+      }}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 8,
-    flexDirection: "row",
   },
   imgContainer: {
     width: 100,

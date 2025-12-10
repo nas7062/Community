@@ -7,10 +7,10 @@ import React, {
 } from "react";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { auth, db } from "@/firebase";
-import { arrayUnion, doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { SESSION_TIMEOUT_MS } from "@/constants";
 import { UserProfile } from "@/types";
-import usePushNotification from "@/hooks/usePushNotification";
+//import usePushNotification from "@/hooks/usePushNotification";
 
 type AuthContextValue = {
   user: User | null;
@@ -49,14 +49,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return unsubscribe;
   }, []);
 
-  const { expoPushToken } = usePushNotification();
+  // const { expoPushToken } = usePushNotification();
 
-  useEffect(() => {
-    if (!user || !expoPushToken) return;
+  // useEffect(() => {
+  //   if (!user || !expoPushToken) return;
 
-    const userRef = doc(db, "users", user.uid);
-    setDoc(userRef, { pushTokens: arrayUnion(expoPushToken) }, { merge: true });
-  }, [user, expoPushToken]);
+  //   const userRef = doc(db, "users", user.uid);
+  //   setDoc(userRef, { pushTokens: arrayUnion(expoPushToken) }, { merge: true });
+  // }, [user, expoPushToken]);
 
   useEffect(() => {
     if (!user) return;

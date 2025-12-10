@@ -49,19 +49,19 @@ export default function MyScreen() {
           </View>
         </View>
         <View style={styles.tabContainer}>
-          <Tab isActive={currentTab === 0} onPress={() => handlePressTab(0)}>
-            내 게시물
-          </Tab>
-          <Tab isActive={currentTab === 1} onPress={() => handlePressTab(1)}>
-            좋아요 한 게시물
-          </Tab>
+          <Tab
+            isActive={currentTab === 0}
+            label="내 게시물"
+            onPress={() => handlePressTab(0)}
+          ></Tab>
+          <Tab
+            isActive={currentTab === 1}
+            label="좋아요 한 게시물"
+            onPress={() => handlePressTab(1)}
+          ></Tab>
         </View>
         <View style={styles.contentContainer}>
-          <NativePager
-            pagerRef={pagerRef}
-            setCurrentTab={setCurrentTab}
-            currentTab={currentTab}
-          />
+          <NativePager currentTab={currentTab} />
         </View>
       </SafeAreaView>
     </AuthRoute>

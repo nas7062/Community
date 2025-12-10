@@ -14,7 +14,7 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import { db } from "@/firebase";
-import { Comment, CreateCommentDto, User } from "@/types";
+import { Comment, CreateCommentDto, UserProfile } from "@/types";
 import { getAuth } from "firebase/auth";
 
 export async function CreateComment(body: CreateCommentDto): Promise<Comment> {
@@ -25,7 +25,7 @@ export async function CreateComment(body: CreateCommentDto): Promise<Comment> {
     throw new Error("로그인된 사용자가 없습니다.");
   }
 
-  const user: User = {
+  const user: UserProfile = {
     id: currentUser.uid,
     displayName:
       body.profile.displayName ??

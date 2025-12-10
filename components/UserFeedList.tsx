@@ -44,7 +44,7 @@ function UserFeedList({ userId }: { userId: string }) {
       ref={topRef}
       data={posts}
       renderItem={({ item }) => <Feed post={item} />}
-      keyExtractor={(item) => String(item.id)}
+      keyExtractor={(item) => `${String(item.id)}-user`}
       contentContainerStyle={styles.contentContainer}
       onEndReached={loadMore}
       onEndReachedThreshold={0.1}

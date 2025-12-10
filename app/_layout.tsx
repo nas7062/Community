@@ -8,22 +8,26 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { useReactQueryDevTools } from "@dev-plugins/react-query";
 import * as Notifications from "expo-notifications";
+import { LogBox } from "react-native";
+
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldPlaySound: true,
+//     shouldSetBadge: true,
+//     shouldShowBanner: true,
+//     shouldShowList: true,
+//   }),
+// });
 
 const queryClient = new QueryClient();
 export default function RootLayout() {
   useReactQueryDevTools(queryClient);
+
+  LogBox.ignoreAllLogs(false);
   return (
     <>
       <ActionSheetProvider>

@@ -24,7 +24,7 @@ function CustomButton({
       ]}
       {...props}
     >
-      <Text style={(styles[`${variant}Label`], styles[`${size}Label`])}>
+      <Text style={[styles[`${variant}Label`], styles[`${size}Label`]]}>
         {label}
       </Text>
     </Pressable>

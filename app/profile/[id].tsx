@@ -4,7 +4,8 @@ import { colors } from "@/constants";
 import { useAuth } from "@/context/AuthContext";
 import { useGetProfile } from "@/hooks/useGetProfile";
 import { Redirect, useLocalSearchParams } from "expo-router";
-import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
   const { id: userId } = useLocalSearchParams();

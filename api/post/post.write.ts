@@ -85,7 +85,7 @@ export async function updatePost({
     throw new Error("로그인된 사용자가 없습니다.");
   }
 
-  const author: User = {
+  const author: UserProfile = {
     id: currentUser.uid,
     displayName: body.profile.displayName ?? currentUser.displayName,
     imageUri: currentUser.photoURL ?? "",

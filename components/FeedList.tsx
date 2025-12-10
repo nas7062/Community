@@ -44,8 +44,8 @@ function FeedList() {
     <FlatList
       ref={topRef}
       data={posts}
-      renderItem={({ item }) => <Feed post={item} />}
-      keyExtractor={(item) => String(item.id)}
+      renderItem={({ item }) => <Feed post={item}  />}
+      keyExtractor={(item) => item.docId ?? String(item.id)}
       contentContainerStyle={styles.contentContainer}
       onEndReached={loadMore}
       onEndReachedThreshold={0.1}

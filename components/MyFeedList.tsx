@@ -46,8 +46,9 @@ function MyFeedList() {
       ref={topRef}
       data={posts}
       renderItem={({ item }) => <Feed post={item} />}
-      keyExtractor={(item) => String(item.id)}
+      keyExtractor={(item) => item.docId ?? `${String(item.id)}-my`}
       contentContainerStyle={styles.contentContainer}
+      removeClippedSubviews={false}
       onEndReached={loadMore}
       onEndReachedThreshold={0.1}
       refreshing={isRefreshing}

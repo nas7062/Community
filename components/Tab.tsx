@@ -1,22 +1,20 @@
 import { colors } from "@/constants";
-import React, { ReactNode } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Pressable, StyleSheet, Text } from "react-native";
 
 interface TabProps {
   isActive: boolean;
   onPress?: () => void;
-  children: ReactNode;
+  label: string;
 }
 
-function Tab({ isActive, children, onPress }: TabProps) {
+function Tab({ isActive, label, onPress }: TabProps) {
   return (
     <Pressable
       style={[styles.container, isActive && styles.activeContainer]}
       onPress={onPress}
     >
-      <Text style={[styles.text, isActive && styles.activeText]}>
-        {children}
-      </Text>
+      <Text style={[styles.text, isActive && styles.activeText]}>{label}</Text>
     </Pressable>
   );
 }

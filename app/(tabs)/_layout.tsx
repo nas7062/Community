@@ -4,6 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 export default function TabLayout() {
   return (
     <Tabs
+      detachInactiveScreens={false}
       screenOptions={{
         tabBarActiveTintColor: "black",
         headerShown: false,
@@ -13,7 +14,6 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "홈",
-
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "home-sharp" : "home-outline"}
