@@ -1,0 +1,138 @@
+import AuthRoute from "@/components/AuthRoute";
+import CustomButton from "@/components/CustomButton";
+import NativePager from "@/components/NativePager";
+import Tab from "@/components/Tab";
+import { colors } from "@/constants";
+import { useAuth } from "@/context/AuthContext";
+import { router } from "expo-router";
+import { useRef, useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+export default function MyScreen() {
+  const { profile } = useAuth();
+
+  const [currentTab, setCurrentTab] = useState(0);
+  const pagerRef = useRef<any>(null);
+
+  const handlePressTab = (idx: number) => {
+    setCurrentTab(idx);
+    pagerRef.current?.setPage?.(idx);
+  };
+
+  return (
+    <AuthRoute>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.imgContainer}>
+          <Image
+            style={styles.profileImg}
+            source={
+              profile?.imageUri
+                ? {
+                    uri: profile.imageUri,
+                  }
+                : require("@/assets/images/rabbit.png")
+            }
+          />
+          <View style={styles.textContainer}>
+            <Text style={styles.name}>{profile?.displayName}</Text>
+            <Text style={styles.descript}>
+              {profile?.descript ? profile?.descript : "저를 소개합니다."}
+            </Text>
+            <View style={styles.updateBtn}>
+              <CustomButton
+                label="프로필 정보"
+                size="medium"
+                variant="filled"
+                onPress={() => router.push("/my/info")}
+              />
+            </View>
+          </View>
+        </View>
+        <View style={styles.tabContainer}>
+          <Tab isActive={currentTab === 0} onPress={() => handlePressTab(0)}>
+            내 게시물
+          </Tab>
+          <Tab isActive={currentTab === 1} onPress={() => handlePressTab(1)}>
+            좋아요 한 게시물
+          </Tab>
+        </View>
+        <View style={styles.contentContainer}>
+          <NativePager
+            pagerRef={pagerRef}
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+          />
+        </View>
+      </SafeAreaView>
+    </AuthRoute>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  tabContainer: {
+    flexDirection: "row",
+    marginTop: 2,
+  },
+  imgContainer: {
+    flex: 1,
+    backgroundColor: colors.SECONDARY,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    position: "relative",
+  },
+  textContainer: {
+    marginLeft: 16,
+    flexShrink: 1,
+    gap: 4,
+  },
+  name: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  descript: {
+    fontSize: 12,
+  },
+  profileImg: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    overflow: "hidden",
+    borderColor: colors.GRAY_200,
+    borderWidth: 2,
+    backgroundColor: colors.WHITE,
+  },
+
+  contentContainer: {
+    flex: 2,
+    width: "100%",
+    alignSelf: "center",
+    gap: 10,
+  },
+  infoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  logoutBtn: {
+    backgroundColor: colors.PRIMARY,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginLeft: "auto",
+    borderRadius: 8,
+  },
+  logoutText: {
+    color: colors.WHITE,
+  },
+  updateBtn: {
+    position: "absolute",
+    top: -40,
+    right: -100,
+  },
+});
