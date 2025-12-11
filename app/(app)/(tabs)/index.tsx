@@ -45,7 +45,7 @@ export default function HomeScreen() {
         <SearchInput
           readOnly
           placeholder="글 제목 검색"
-          onPress={() => router.push("/posts/search")}
+          onPress={() => router.push("/post/search")}
         />
       </View>
 

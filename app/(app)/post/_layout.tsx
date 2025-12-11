@@ -34,6 +34,14 @@ export default function AuthLayout() {
           headerShown: true,
         }}
       />
+      <Stack.Screen
+        name="search"
+        options={{
+          title: "검색",
+          headerTitleAlign: "center",
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
