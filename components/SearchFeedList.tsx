@@ -14,9 +14,11 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import SearchInput from "./SearchInput";
 import { router } from "expo-router";
 import { useGetSearchPosts } from "@/hooks/useGetSearchPosts";
+import { useDebounce } from "@/hooks/useDebounce";
 
 function SearchFeedList() {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 400);
   const {
     data,
     isLoading,
@@ -24,7 +26,7 @@ function SearchFeedList() {
     fetchNextPage,
     hasNextPage,
     refetch,
-  } = useGetSearchPosts(search);
+  } = useGetSearchPosts(debouncedSearch);
   const posts = data?.pages.flatMap((page) => page.posts) ?? [];
   const [isRefreshing, setIsRefreshing] = useState(false);
   const topRef = useRef<FlatList | null>(null);
@@ -62,7 +64,10 @@ function SearchFeedList() {
             onPress={() => router.back()}
           />
         </View>
-        <SearchInput />
+        <SearchInput
+          onChangeText={(value) => setSearch(value)}
+          value={search}
+        />
       </View>
       <FlatList
         ref={topRef}

@@ -3,7 +3,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 export function useGetSearchPosts(q?: string) {
   return useInfiniteQuery({
-    queryKey: ["searchposts", queueMicrotask],
+    queryKey: ["searchposts", q],
     queryFn: ({ pageParam }: { pageParam?: string }) =>
       getInfiniteSearchPosts({ pageParam, q }),
     getNextPageParam: (lastPage: { nextCursor?: string }) =>
