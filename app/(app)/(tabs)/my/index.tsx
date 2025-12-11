@@ -5,11 +5,13 @@ import Tab from "@/components/Tab";
 import { colors } from "@/constants";
 import { useAuth } from "@/context/AuthContext";
 import { router } from "expo-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import useUserCheck from "@/hooks/useUserCheck";
 export default function MyProfileScreen() {
   const { profile } = useAuth();
+  const { user, loading } = useUserCheck();
 
   const [currentTab, setCurrentTab] = useState(0);
   const pagerRef = useRef<any>(null);
@@ -18,9 +20,23 @@ export default function MyProfileScreen() {
     setCurrentTab(idx);
     pagerRef.current?.setPage?.(idx);
   };
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace("/auth");
+    }
+  }, [loading, user]);
 
+  if (loading || !user) {
+    return (
+      <SafeAreaView
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <Text>로그인 상태 확인 중...</Text>
+      </SafeAreaView>
+    );
+  }
   return (
-    <RequireAuthScreen>
+    <>
       <SafeAreaView style={styles.container} edges={["top", "bottom"]}>
         <View style={styles.imgContainer}>
           <Image
@@ -64,7 +80,7 @@ export default function MyProfileScreen() {
           <NativePager currentTab={currentTab} />
         </View>
       </SafeAreaView>
-    </RequireAuthScreen>
+    </>
   );
 }
 

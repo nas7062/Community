@@ -112,7 +112,7 @@ export default function PostDetailScreen() {
             <Text style={styles.commnetCount}>댓글{comments.length || 0}</Text>
           </View>
           {comments?.map((comment) => (
-            <React.Fragment key={comment.id}>
+            <View key={comment.id}>
               <Comment
                 comment={comment}
                 postDocId={post.docId}
@@ -128,7 +128,7 @@ export default function PostDetailScreen() {
                   isReply
                 />
               ))}
-            </React.Fragment>
+            </View>
           ))}
         </ScrollView>
       </KeyboardAvoidingView>

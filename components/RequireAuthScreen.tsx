@@ -12,7 +12,6 @@ export default function RequireAuthScreen({ children }: Props) {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  console.log(!!user, loading);
   useEffect(() => {
     if (!loading && !user) {
       router.replace("/auth");
