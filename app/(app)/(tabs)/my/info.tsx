@@ -1,4 +1,4 @@
-import RequireAuthScreen from "@/components/AuthRoute";
+import RequireAuthScreen from "@/components/RequireAuthScreen";
 import { colors } from "@/constants";
 import { useAuth } from "@/context/AuthContext";
 import { auth } from "@/firebase";
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "80%",
     marginHorizontal: "auto",
+    justifyContent: "center",
     gap: 10,
   },
   infoContainer: {

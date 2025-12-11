@@ -1,4 +1,4 @@
-import { useRequireAuth } from "@/components/AuthRoute";
+import { useRequireAuth } from "@/components/RequireAuthScreen";
 import UserFeedList from "@/components/UserFeedList";
 import { colors } from "@/constants";
 import { useAuth } from "@/context/AuthContext";
@@ -12,7 +12,7 @@ export default function ProfileScreen() {
   const { user } = useAuth();
   const { data: profile } = useGetProfile(userId as string);
   const { user: userLogin, loading, isNavReady } = useRequireAuth();
-  
+
   if (user?.uid === userId) {
     return <Redirect href={"/my"} />;
   }

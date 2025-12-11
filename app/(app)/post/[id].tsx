@@ -132,7 +132,12 @@ export default function PostDetailScreen() {
           ))}
         </ScrollView>
       </KeyboardAvoidingView>
-      <View style={styles.commentInputContainer}>
+      <View
+        style={[
+          styles.commentInputContainer,
+          { paddingBottom: inset.bottom || 10 },
+        ]}
+      >
         <InputField
           ref={inputRef}
           value={content}

@@ -15,7 +15,7 @@ import { useAuth } from "@/context/AuthContext";
 import IntroduceInput from "@/components/IntroduceInput";
 import ImageInput from "@/components/ImageUrlInput";
 import useUploadImage from "@/api/image";
-import RequireAuthScreen from "@/components/AuthRoute";
+import RequireAuthScreen from "@/components/RequireAuthScreen";
 
 const ProfileSchema = z.object({
   name: z

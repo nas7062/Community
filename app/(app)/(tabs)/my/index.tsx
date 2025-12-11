@@ -1,4 +1,4 @@
-import RequireAuthScreen from "@/components/AuthRoute";
+import RequireAuthScreen from "@/components/RequireAuthScreen";
 import CustomButton from "@/components/CustomButton";
 import NativePager from "@/components/NativePager";
 import Tab from "@/components/Tab";
