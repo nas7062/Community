@@ -67,6 +67,7 @@ function SearchFeedList() {
         <SearchInput
           onChangeText={(value) => setSearch(value)}
           value={search}
+          autoFocus
         />
       </View>
       <FlatList
