@@ -1,17 +1,17 @@
-import { Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { getLocales } from "expo-localization";
 import { useEffect } from "react";
 import { getStorage } from "../util/secureStore";
 import { resources } from "../util/resourece";
-
+import { useFonts } from "expo-font";
+import Apploading from "expo-app-loading";
 export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
-
+SplashScreen.preventAutoHideAsync();
 const devicelanguage = getLocales()[0].languageCode ?? "ko";
-console.log("Current device language: ", devicelanguage);
 
 i18n.use(initReactI18next).init({
   resources,
@@ -21,6 +21,16 @@ i18n.use(initReactI18next).init({
 });
 
 export default function AppStackLayout() {
+  const [loaded] = useFonts({
+    NoonnuBasicGothicRegular: require("@/assets/font/NoonnuBasicGothicRegular.ttf"),
+  });
+
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
   useEffect(() => {
     const loadLanguage = async () => {
       try {
@@ -35,6 +45,10 @@ export default function AppStackLayout() {
 
     loadLanguage();
   }, []);
+
+  if (!loaded) {
+    return <Apploading />;
+  }
   return (
     <Stack screenOptions={{ headerShown: false }}>
       {/* 탭 그룹 */}
