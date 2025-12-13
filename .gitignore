@@ -48,6 +48,6 @@ community-2d1c5-firebase-adminsdk-fbsvc-e1c4ec3e40.jsoncommunity-2d1c5-firebase-
 
 
 # Firebase / GCP
-*.json
+
 *.pem
 .env

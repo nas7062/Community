@@ -1,17 +1,17 @@
 import { SplashScreen, Stack } from "expo-router";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { getLocales } from "expo-localization";
+import * as Localization from "expo-localization";
 import { useEffect } from "react";
-import { getStorage } from "../util/secureStore";
-import { resources } from "../util/resourece";
+import { getStorage } from "@/util/secureStore";
+import { resources } from "@/util/resourece";
 import { useFonts } from "expo-font";
 import Apploading from "expo-app-loading";
 export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
 SplashScreen.preventAutoHideAsync();
-const devicelanguage = getLocales()[0].languageCode ?? "ko";
+const devicelanguage = Localization.getLocales()[0].languageCode ?? "ko";
 
 i18n.use(initReactI18next).init({
   resources,
