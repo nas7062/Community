@@ -1,5 +1,5 @@
 import ListItem from "@/components/ListItem";
-import { saveStorage } from "@/util/secureStore";
+import i18n from "@/util/i18n";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
@@ -7,28 +7,27 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SettingScreen() {
   const { showActionSheetWithOptions } = useActionSheet();
-  const { i18n, t } = useTranslation();
+  const { t } = useTranslation(); // ❗ i18n은 여기서 안 꺼냄
 
   const handlePressLanguage = () => {
-    const options = ["English", "한국어", t("Cancle")];
+    const options = ["English", "한국어", t("Cancel")];
     const cancelButtonIndex = 2;
+
     showActionSheetWithOptions(
       {
         options,
         cancelButtonIndex,
       },
-      (selectedIndex?: number) => {
+      async (selectedIndex?: number) => {
         switch (selectedIndex) {
           case 0:
-            i18n.changeLanguage("en");
-            saveStorage("language", "en");
+            await i18n.changeLanguage("en");
             break;
+
           case 1:
-            i18n.changeLanguage("ko");
-            saveStorage("language", "ko");
+            await i18n.changeLanguage("ko");
             break;
-          case cancelButtonIndex:
-            break;
+
           default:
             break;
         }

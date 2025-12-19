@@ -1,53 +1,39 @@
 import { SplashScreen, Stack } from "expo-router";
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import * as Localization from "expo-localization";
-import { useEffect } from "react";
-import { getStorage } from "@/util/secureStore";
-import { resources } from "@/util/resourece";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import Apploading from "expo-app-loading";
+import i18n, { initI18n } from "@/util/i18n";
+
 export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
-SplashScreen.preventAutoHideAsync();
-const devicelanguage = Localization.getLocales()[0].languageCode ?? "ko";
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: devicelanguage,
-  fallbackLng: "ko",
-  debug: true,
-});
+SplashScreen.preventAutoHideAsync();
 
 export default function AppStackLayout() {
   const [loaded] = useFonts({
     NoonnuBasic: require("@/assets/font/NoonnuBasicGothicRegular.ttf"),
   });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+  const [i18nReady, setI18nReady] = useState(false);
 
   useEffect(() => {
-    const loadLanguage = async () => {
-      try {
-        const savedLanguage = (await getStorage("language")) ?? devicelanguage;
-        if (savedLanguage) {
-          await i18n.changeLanguage(savedLanguage);
-        }
-      } catch (error) {
-        console.error("Error loading language:", error);
-      }
+    const boot = async () => {
+      // 항상 한국어를 기본 언어로 사용
+      await initI18n("ko");
+      setI18nReady(true);
     };
 
-    loadLanguage();
+    boot();
   }, []);
 
-  if (!loaded) {
-    return <Apploading />;
+  useEffect(() => {
+    if (loaded && i18nReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, i18nReady]);
+
+  if (!loaded || !i18nReady) {
+    return null;
   }
   return (
     <Stack screenOptions={{ headerShown: false }}>
